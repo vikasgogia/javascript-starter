@@ -221,3 +221,131 @@ Student.prototype.constructor = Student
 // Ideally this should point to Student, but here it's pointing to Person
 // to fix this, assign Student to Student.prototype.constructor
 console.log(Student.prototype.constructor)
+
+
+
+
+
+// coding challenge 3
+const EV = function(speed, make, charge) {
+    Car.call(this, speed, make)
+    this.charge = charge
+}
+
+EV.prototype = Object.create(Car.prototype)
+EV.prototype.constructor = EV
+
+EV.prototype.chargeBattery = function(chargeTo) {
+    this.charge = chargeTo
+}
+
+// polymorphism
+EV.prototype.accelerate = function() {
+    this.speed += 20
+    this.charge -= 1
+    console.log(`${this.make} going at ${this.speed} km/hr, with a charge of ${this.charge} %`)
+}
+
+const tesla = new EV(120, 'Tesla', 23)
+tesla.accelerate()
+tesla.brake()
+tesla.chargeBattery(90)
+tesla.accelerate()
+
+
+
+
+class StudentCl extends PersonCl {
+    constructor(name, yob, course) {
+        super(name, yob)
+        this.course = course
+    }
+
+    introduce() {
+        console.log(`Hi, my name's ${this.name} and I am enrolled in ${this.course}.`)
+    }
+}
+
+const s2 = new StudentCl('Him G', 1991, 'B.Com')
+s2.calcAge()
+s2.introduce()
+
+
+
+
+// inheritance using Object.create() 
+const StudentPrototype = Object.create(PersonPrototype)
+StudentPrototype.init = function(fName, yob, course) {
+    PersonPrototype.init.call(this, fName, yob)
+    this.course = course
+}
+
+StudentPrototype.introduce = function() {
+    console.log(`Hi, my name's ${this.fName} and I am enrolled in ${this.course}.`)
+}
+
+const mumma = Object.create(StudentPrototype)
+mumma.init("Sum", 1947, "B.A")
+mumma.calcAge()
+mumma.introduce()
+
+
+
+
+// data encapsulation and privacy
+// all the fields with an underscore marks that they are protected
+class Account {
+    // public fields (would be present on intances rather than the prototype)
+    language = 'English'
+
+    // private fields (#)
+    #movements = []
+    #balance = 0
+    #pin
+
+    constructor(owner, currency, pin) {
+        this.owner = owner
+        this.currency = currency
+        this.#pin = pin
+        
+        console.log(`Thanks for opening an account, ${this.owner}!`)
+    }
+
+    showBalance() {
+        console.log(`Your balance is: ${this.#balance}`)
+    }
+
+    showTransactions() {
+        console.log(this.#movements)
+    }
+
+    deposit(val) {
+        this.#movements.push(val)
+        this.#balance += val
+    }
+
+    withdraw(val) {
+        if(val <= this.#balance) {
+            this.deposit(-val)
+        }
+    }
+
+    // protected method _ (just a convention, not really protected)
+    // convert to private using #
+    #approveLoan(val) {
+        return this.#balance >= 0.3 * val
+    }
+
+    requestLoan(val) {
+        if(this.#approveLoan(val)) {
+            this.deposit(val)
+        }
+    }
+}
+
+const acc1 = new Account("Vikas", "cad", 1031)
+acc1.deposit(1000)
+acc1.withdraw(500)
+acc1.requestLoan(600)
+acc1.showBalance()
+acc1.showTransactions()
