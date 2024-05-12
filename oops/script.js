@@ -6,6 +6,11 @@ const Person = function(fName, yob) {
     this.yob = yob
 }
 
+// static method
+Person.hey = function() {
+    console.log("this is a static method on Person constructor function")
+}
+
 // function must be defined on the prototype object
 Person.prototype.calcAge = function() {
     console.log("age = ", 2037 - this.yob)
@@ -84,3 +89,50 @@ mer.accelerate()
 mer.brake()
 mer.brake()
 mer.accelerate()
+
+
+
+
+class PersonCl {
+    constructor(name, yob) {
+        this.name = name
+        this.yob = yob
+    }
+
+    // (static method) declared on the PersonCl.prototype
+    calcAge() {
+        console.log("age =", 2037 - this.yob)
+    }
+
+    // getter (accessed like a property)
+    get age() {
+        return 2037 - this.yob
+    }
+
+    // setter of a predefined property 'name'
+    set name(n) {
+        // here this will lead into a stack size exceeded error due to recursion
+        // so we define a new variable for this: _name & define a custom getter as well
+        if(n.includes(' ')) this._name = n
+        else console.log("name's not a full name")
+    }
+
+    get name() {
+        return this._name
+    }
+
+    static hey() {
+        console.log("This is available on class, not on the object that's created through it")
+    }
+}
+
+const him = new PersonCl('him g', 1991)
+console.log(him)
+him.calcAge()
+console.log(him.name)
+
+// not possible as hey() is a static function
+// him.hey()
+
+PersonCl.hey()
+Person.hey()
