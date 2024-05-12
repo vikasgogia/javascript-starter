@@ -317,16 +317,19 @@ class Account {
 
     showTransactions() {
         console.log(this.#movements)
+        return this
     }
 
     deposit(val) {
         this.#movements.push(val)
         this.#balance += val
+        return this
     }
 
     withdraw(val) {
         if(val <= this.#balance) {
             this.deposit(-val)
+            return this
         }
     }
 
@@ -339,6 +342,7 @@ class Account {
     requestLoan(val) {
         if(this.#approveLoan(val)) {
             this.deposit(val)
+            return this
         }
     }
 }
@@ -349,3 +353,40 @@ acc1.withdraw(500)
 acc1.requestLoan(600)
 acc1.showBalance()
 acc1.showTransactions()
+
+//  chaining (return "this" in the functions return calls)
+acc1.deposit(1000).withdraw(500).requestLoan(600).showTransactions().showBalance()
+
+
+
+
+// coding challenge 4
+class EVCl extends CarCl {
+    #charge
+
+    constructor(speed, make, charge) {
+        super(speed, make)
+        this.#charge = charge
+    }
+
+    chargeBattery(chargeTo) {
+        this.#charge = chargeTo
+        return this
+    }
+
+    accelerate() {
+        this.speed += 20
+        this.#charge -= 1
+        console.log(`${this.make} going at ${this.speed} km/hr, with a charge of ${this.#charge} %`)
+        return this
+    }
+
+    brake() {
+        this.speed -= 5
+        console.log("Applied brakes:", this.speed, "kms/hr")
+        return this
+    }
+}
+
+const rivian = new EVCl(120, 'Rivian', 23)
+rivian.chargeBattery(90).accelerate().brake().brake().accelerate().chargeBattery(99).brake()
