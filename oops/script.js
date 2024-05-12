@@ -61,7 +61,7 @@ console.log(arr.uniqueNums())
 
 
 
-// coding challenge
+// coding challenge 1
 const Car = function(speed, make) {
     this.speed = speed
     this.make  = make
@@ -99,7 +99,7 @@ class PersonCl {
         this.yob = yob
     }
 
-    // (static method) declared on the PersonCl.prototype
+    // declared on the PersonCl.prototype
     calcAge() {
         console.log("age =", 2037 - this.yob)
     }
@@ -136,3 +136,88 @@ console.log(him.name)
 
 PersonCl.hey()
 Person.hey()
+
+
+
+
+// creating a prototype manually (nothing more than an object)
+const PersonPrototype = {
+
+    // a custom function to replicate constructor
+    init(fName, yob) {
+        this.fName = fName
+        this.yob = yob
+    },
+
+    calcAge() {
+        console.log("age =", 2037 - this.yob)
+    }
+}
+
+const papa = Object.create(PersonPrototype)
+papa.init('Viju', 1901)
+papa.calcAge()
+console.log("papa.__proto__ === PersonPrototype? ", papa.__proto__ === PersonPrototype)
+
+
+
+
+// coding challenge 2
+class CarCl {
+    constructor(speed, make) {
+        this.speed = speed
+        this.make  = make
+    }
+
+    get speedUS() {
+        return this.speed/ 1.6
+    }
+
+    set speedUS(speed) {
+        this.speed = 1.6 * speed
+    }
+
+    accelerate() {
+        this.speed += 10
+        console.log("Accelerated:", this.speed, "kms/hr")
+    }
+
+    brake() {
+        this.speed -= 5
+        console.log("Applied brakes:", this.speed, "kms/hr")
+    }
+}
+
+const ford = new CarCl(120, 'Ford')
+ford.accelerate()
+ford.brake()
+ford.brake()
+ford.accelerate()
+ford.speedUS = 120
+console.log(ford.speedUS, "miles/hr", ",", ford.speed, "km/hr")
+
+
+
+
+// inheritance
+const Student = function(fName, yob, course) {
+    // NP to simply call Person() function, as "this" will be "undefined"
+    Person.call(this, fName, yob)
+    this.course = course
+}
+
+Student.prototype = Object.create(Person.prototype)
+
+Student.prototype.introduce = function() {
+    console.log(`Hi, my name's ${this.fName} and I am enrolled in ${this.course}.`)
+}
+
+const s1 = new Student("Vikas", 1999, "MCS")
+s1.introduce()
+s1.calcAge()
+
+Student.prototype.constructor = Student
+
+// Ideally this should point to Student, but here it's pointing to Person
+// to fix this, assign Student to Student.prototype.constructor
+console.log(Student.prototype.constructor)
