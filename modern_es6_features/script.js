@@ -186,3 +186,113 @@ game.printGoals('Davies', 'Miller', 'Kimmich');
 
 (team1 > team2) && console.log("Team 1 is more likely to win!");
 (team1 < team2) && console.log("Team 2 is more likely to win!");
+
+
+
+
+
+
+// for-of loop (similar to for each loop in C++)
+for (const item of arr) console.log(item)
+
+// entries are an array of iterators i.e. [index, value]
+for (const item of arr.entries()) console.log(item)
+
+
+
+
+// optional chanining
+// can be used on both properties and functions
+console.log(restaurant.openingHrs?.sat)
+restaurant.orderAppetizers?.(0,1) // function doesn't exist
+restaurant.orderFood?.(0, 1)
+
+
+
+
+// Looping object keys
+console.log("object keys", Object.keys(restaurant.openingHrs))
+console.log("object values", Object.values(restaurant.openingHrs))
+console.log("object entries (key, val)", Object.entries(restaurant.openingHrs))
+
+
+
+
+// coding challenge 2
+console.log("\n\n\n\n ---- Coding Challenge 2 ----")
+for(let i=1; i<= game.scored.length; i++) console.log(`${i}: ${game.scored[i]}`)
+
+const oddsValues = Object.values(game.odds)
+console.log("Odd average:", oddsValues.reduce((acc, curr) => acc + curr, 0) / oddsValues.length)
+
+for(const [team, odds] of Object.entries(game.odds)) {
+    console.log(`Odd of ${team === 'x' ? 'draw' : `victory ${game[team]}`} ${odds}`)
+}
+
+
+
+
+
+// Sets
+// set can not have duplicates
+const s1 = new Set([1, 2, 1, 0, 4, 3, 3, 5])
+const s2 = new Set('Jonassssss')
+console.log(s2) // Set(5) { 'J', 'o', 'n', 'a', 's' }
+
+console.log(s1)
+console.log(s1.size)
+
+console.log(s1.has(10)) // search
+
+s1.add(10)
+console.log(s1)
+
+s1.delete(10)
+console.log(s1)
+
+// s1.clear()
+
+
+
+
+
+// Maps
+// In object, keys are strings, but in map keys can have any data type
+const m1 = new Map()
+m1.set(100, 1).set("hi", "vikas") // chaining
+console.log(m1)
+
+console.log(m1.get('hi'))
+console.log(m1.has(100))
+
+m1.delete(100)
+console.log(m1.size)
+
+// here both of the array objects [1, 2] are different in the heap
+m1.set([1,2], 'arr1')
+console.log(m1.has([1, 2])) // false - but why?
+
+// this time it works as we are referencing the same array
+const arr1 = [1, 2]
+m1.set(arr1, 'arr1')
+console.log(m1.has(arr1)) // true
+
+const m2 = new Map([
+    [1, "one"],
+    [2, "two"]
+])
+console.log(m2)
+
+// convert an object into a map
+const obj1 = {
+    3: "three",
+    4: "four"
+}
+const m3 = new Map(Object.entries(obj1))
+console.log(m3)
+
+// convert map to array
+console.log([...m3])
+console.log(m3.entries())
+console.log(m3.values())
+console.log(m3.keys())
