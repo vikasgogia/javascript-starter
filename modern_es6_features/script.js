@@ -235,6 +235,7 @@ for(const [team, odds] of Object.entries(game.odds)) {
 
 // Sets
 // set can not have duplicates
+console.log("\n\n\n\n ---- Sets ----")
 const s1 = new Set([1, 2, 1, 0, 4, 3, 3, 5])
 const s2 = new Set('Jonassssss')
 console.log(s2) // Set(5) { 'J', 'o', 'n', 'a', 's' }
@@ -258,6 +259,7 @@ console.log(s1)
 
 // Maps
 // In object, keys are strings, but in map keys can have any data type
+console.log("\n\n\n\n ---- Maps ----")
 const m1 = new Map()
 m1.set(100, 1).set("hi", "vikas") // chaining
 console.log(m1)
@@ -296,3 +298,58 @@ console.log([...m3])
 console.log(m3.entries())
 console.log(m3.values())
 console.log(m3.keys())
+
+
+
+
+
+// strings
+// string is immutable (primitive)
+// string is primitive then why we are able to call functions on it?
+// string is BTS converted to a string object - boxing
+console.log("\n\n\n\n ---- Strings ----")
+console.log(typeof new String("vikas")) // object
+
+const str1 = "ABDC 5432 DE"
+
+console.log("str1[6] =", str1[6])
+console.log(".length =", str1.length)
+console.log(".indexOf('D') =", str1.indexOf('D')) // first index
+console.log(".lastIndexOf('D') =", str1.lastIndexOf('D')) // last index
+console.log(".indexOf('43') =", str1.indexOf('43')) // index of word - case sensitive
+
+console.log(".slice(4)", str1.slice(4)) // from index 4 to end
+console.log(".slice(-1)", str1.slice(-1)) // last character
+console.log(".slice(-4)", str1.slice(-4)) // last 4 characters
+console.log(".slice(4, 7)", str1.slice(4, 7))
+
+// first word
+console.log("first word", str1.slice(0, str1.indexOf(' ')))
+// last word
+console.log("last word", str1.slice(str1.lastIndexOf(' ')+1))
+
+console.log(str1.toUpperCase())
+console.log(str1.toLowerCase())
+console.log(str1[0].toUpperCase() + str1.slice(1).toLowerCase()) // capitalize
+
+const str2 = "     Acdwsv 76 jbs 7    \n "
+console.log(str2.trim())
+
+const str3 = "288,97£"
+const str4 = "All boarding gates will be closed. Make sure you enter before gate 4 closes"
+console.log(str3.replace('£', '$').replace(',', '.'))
+// replace all "gate" with "door" using regex - g is global
+console.log(str4.replace(/gate/g, 'door'))
+
+console.log(str4.includes('boarding'))
+console.log(str4.startsWith('all')) // case sensitive
+console.log(str4.endsWith('closes')) // case sensitive
+
+
+// split
+console.log(str4.split(' ')) // gives an arrys of strings after split
+console.log(['Mr.', 'Vikas', 'Gogia'].join(' '))
+console.log(str3.padStart(25, '_'))
+console.log(str3.padEnd(25, '_'))
+
+console.log(str3.repeat(5))
