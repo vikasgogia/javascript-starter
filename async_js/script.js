@@ -110,81 +110,88 @@
 
 
 
-/**
- * Async/ Await
- */
+// /**
+//  * Async/ Await
+//  */
 
-// await blocks the execution, but doesn't interrupt main thread
-// as the function is marketd as async.
-const whereAmI = async function(country) {
-    try {
-        const res = await fetch(`https://restcountries.com/v3.1/name/${country}`)
-        if(res.status != 200) 
-            throw new Error("unable to get country")
-        const json = await res.json()
-        console.log('asynchronous operation done!')
-        return json
-    } 
-    catch(err) {
-        console.log(`My error handling: ${err}`)
-        throw err
-    }
-};
+// // await blocks the execution, but doesn't interrupt main thread
+// // as the function is marketd as async.
+// const whereAmI = async function(country) {
+//     try {
+//         const res = await fetch(`https://restcountries.com/v3.1/name/${country}`)
+//         if(res.status != 200) 
+//             throw new Error("unable to get country")
+//         const json = await res.json()
+//         console.log('asynchronous operation done!')
+//         return json
+//     } 
+//     catch(err) {
+//         console.log(`My error handling: ${err}`)
+//         throw err
+//     }
+// };
 
-// whereAmI('india')
+// // whereAmI('india')
+// // console.log('synchronous code runs first')
+
+// // now let's say that whereAmI() function returns some Promise<> and we want to perform
+// // some work post this whereAmI() function
+
+// // We can use an IIFE (Immediately Invoked Function Expressions) - no function name
+// (async function() {
+//     try{
+//         const res = await whereAmI('india')
+//         console.log(res)
+//     } catch(err) {
+//         console.log(err)
+//     }
+// })();
+
 // console.log('synchronous code runs first')
 
-// now let's say that whereAmI() function returns some Promise<> and we want to perform
-// some work post this whereAmI() function
-
-// We can use an IIFE (Immediately Invoked Function Expressions) - no function name
-(async function() {
-    try{
-        const res = await whereAmI('india')
-        console.log(res)
-    } catch(err) {
-        console.log(err)
-    }
-})();
-
-console.log('synchronous code runs first')
-
-// parallel Promises
-const getThreeCountries = async function(c1, c2, c3) {
-    try {
-        const res = await Promise.all([
-            fetch(`https://restcountries.com/v3.1/name/${c1}`),
-            fetch(`https://restcountries.com/v3.1/name/${c2}`),
-            fetch(`https://restcountries.com/v3.1/name/${c3}`)
-        ])
-        console.log(res[2].status)
-    }
-    catch(err) {
-        console.log(err)
-    }
-}
+// // parallel Promises
+// const getThreeCountries = async function(c1, c2, c3) {
+//     try {
+//         const res = await Promise.all([
+//             fetch(`https://restcountries.com/v3.1/name/${c1}`),
+//             fetch(`https://restcountries.com/v3.1/name/${c2}`),
+//             fetch(`https://restcountries.com/v3.1/name/${c3}`)
+//         ])
+//         console.log(res[2].status)
+//     }
+//     catch(err) {
+//         console.log(err)
+//     }
+// }
 
 // getThreeCountries('india', 'canada', 'uk')
 
-// Promise.race([api1, api2, api3, ...]) - faster
-// Promise.allSettled([api1, api2, api3]) - never short ciruits even if an error occurs
-// Promise.any([api1, api2, api3]) - similar to race, but returns fulfilled promise (no reject())
+// // Promise.race([api1, api2, api3, ...]) - faster
+// // Promise.allSettled([api1, api2, api3]) - never short ciruits even if an error occurs
+// // Promise.any([api1, api2, api3]) - similar to race, but returns fulfilled promise (no reject())
 
-const timeout = function(seconds) {
-    return new Promise((_, reject) => {
-        setTimeout(() => reject(new Error("Request took too long!")), seconds * 1000)
-    })
-};
+// const timeout = function(seconds) {
+//     return new Promise((_, reject) => {
+//         setTimeout(() => reject(new Error("Request took too long!")), seconds * 1000)
+//     })
+// };
 
-(async function() {
-    try {
-        const res = await Promise.race([
-            fetch(`https://restcountries.com/v3.1/name/india`),
-            timeout(5)
-        ])
-        console.log(res)
-    }
-    catch(err) {
-        console.log(`My error: ${err}`)
-    }
-})()
+// (async function() {
+//     try {
+//         const res = await Promise.race([
+//             fetch(`https://restcountries.com/v3.1/name/india`),
+//             timeout(5)
+//         ])
+//         console.log(res)
+//     }
+//     catch(err) {
+//         console.log(`My error: ${err}`)
+//     }
+// })()
+
+
+
+
+/**
+ * Coding Challenge 3
+ */
